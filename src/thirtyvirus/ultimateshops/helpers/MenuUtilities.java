@@ -33,6 +33,7 @@ public final class MenuUtilities
     private static final ItemStack MODIFY_SHOP;
     private static final ItemStack VIEW_AS_CUSTOMER;
     private static final ItemStack DESTROY_SHOP;
+    private static final ItemStack CUSTOMER_CHANGE_RATE;
     public static final ItemStack INVISIBLE_ITEM;
     private static MenuUtilities obj;
     
@@ -102,8 +103,9 @@ public final class MenuUtilities
         final Inventory inv = Bukkit.createInventory((InventoryHolder)null, 9, UltimateShops.prefix + "Client");
         inv.setItem(6, Utilities.createIdentifier(shop));
         inv.setItem(7, Utilities.createVendorNoteItem(shop));
-        inv.setItem(3, MenuUtilities.INVISIBLE_ITEM);
         inv.setItem(5, MenuUtilities.INVISIBLE_ITEM);
+        inv.setItem(3, MenuUtilities.CUSTOMER_CHANGE_RATE);
+
         int daysInactive = 0;
         int hoursInactive = 0;
         int minutesInactive;
@@ -379,7 +381,7 @@ public final class MenuUtilities
         final String capitalizeFully = WordUtils.capitalizeFully(uShop.getItem().getType().name().replace('_', ' ').toLowerCase());
         final double n = uShop.getAmount() / (double)uShop.getItem().getMaxStackSize();
         if (uShop.getAdmin()) {
-            uShop.setAmount((int)4.20696934E9f);
+            uShop.setAmount(800813569);
         }
         inventory.setItem(0, Utilities.loreItem(Utilities.nameItem(XMaterial.CHEST_MINECART.parseMaterial(), ChatColor.GOLD + "Deposit '" + capitalizeFully + "'"), Arrays.asList(ChatColor.GRAY + "+Shift for Bulk Deposit", "In Stock: " + uShop.getAmount(), "or " + String.format("%.2f", n) + " stacks")));
         inventory.setItem(1, Utilities.loreItem(Utilities.nameItem(XMaterial.HOPPER_MINECART.parseMaterial(), ChatColor.GOLD + "Withdraw '" + capitalizeFully + "'"), Arrays.asList(ChatColor.GRAY + "+Shift for Bulk Withdraw", "In Stock: " + uShop.getAmount(), "or " + String.format("%.2f", n) + " stacks")));
@@ -393,10 +395,11 @@ public final class MenuUtilities
         String name = WordUtils.capitalizeFully(shop.getItem().getType().name().replace('_', ' ').toLowerCase());
         final double stacks = shop.getAmount() / (double)shop.getItem().getMaxStackSize();
         if (shop.getAdmin()) {
-            shop.setAmount(Integer.MAX_VALUE);
+            shop.setAmount(800813569);
         }
         final String moneyString = Utilities.toCommadNumber(String.format("%.2f", econ.getBalance(Bukkit.getOfflinePlayer(player.getUniqueId()))));
         inventory.setItem(2, Utilities.loreItem(Utilities.nameItem(XMaterial.PAPER.parseMaterial(), ChatColor.GOLD + "Current Funds"), Arrays.asList(ChatColor.GRAY + "Funds: " + ChatColor.GREEN + "$" + moneyString)));
+        inventory.setItem(3, MenuUtilities.CUSTOMER_CHANGE_RATE);
         if (shop.getItem().getItemMeta().getDisplayName() != null && shop.getItem().getItemMeta().getDisplayName() != "") {
             name = shop.getItem().getItemMeta().getDisplayName();
         }
@@ -435,6 +438,7 @@ public final class MenuUtilities
         VIEW_AS_CUSTOMER = Utilities.nameItem(XMaterial.OAK_SIGN.parseItem(), ChatColor.GOLD + "View as Customer");
         DESTROY_SHOP = Utilities.nameItem(XMaterial.LIME_STAINED_GLASS_PANE.parseItem(), ChatColor.GREEN + "Destroy Shop");
         INVISIBLE_ITEM = Utilities.nameItem(XMaterial.LIGHT_GRAY_STAINED_GLASS_PANE.parseItem(), " ");
+        CUSTOMER_CHANGE_RATE = Utilities.loreItem(Utilities.nameItem(XMaterial.EMERALD.parseMaterial(), ChatColor.BLUE + "Change Rate"), Arrays.asList(ChatColor.GRAY + "Amount Per Click: 1", "Change the rate you", "would like to buy/sell"));
         MenuUtilities.obj = null;
     }
 }

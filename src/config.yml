@@ -1,0 +1,119 @@
+# UltimateShops for Craftbukkit / Spigot
+# Author: Brandon (ThirtyVirus) Calabrese
+#
+# YouTube:      https://youtube.com/thirtyvirus
+# Twitter:      https://twitter.com/thirtyvirus
+# SpigotMC:     https://spigotmc.org/members/179587/
+# BUY PREMIUM:  https://spigotmc.org/resources/64925/
+
+# FILE: config.yml
+# These are the settings for UltimateShops. Change whatever you like but do not remove any
+# non-comment lines, as this will result in errors.
+
+# FUNCTIONAL PROPERTIES
+
+# The plugin's "tool item" (the item used to interact with slabs and shops) default: STICK
+tool-item: STICK
+
+# display shop items on top of the slabs
+display-items: true
+
+# The maximum capacity of shops (in stacks)
+shop-max-capacity-in-stacks: 6400
+
+# The radius in which vendors can remotely stock shops by clicking a chest w/ the tool item
+chest-remote-restock-radius: 32
+
+# toggle buying and selling in shops
+buy-items: true
+sell-items: true
+
+# toggle whether or not the plugin checks for area build permissions when players try to make new shops
+ignore-build-permissions: false
+
+# suggested prices settings
+# for more info, read suggested_prices.yml
+suggest-buy-prices: true
+suggest-sell-prices: true
+suggest-quantity: true
+
+# Enforce custom (permission based) shop count limits
+# This allows server owners to enforce limits on how many
+# shops a permissions group can have maximum. Groups without any
+# permissions with this setting enabled will not be able to make any shops.
+# Permissions Format: ushops.makeshops.AMOUNT
+enforce-shop-limit: false
+
+# Allow the use of upper hald slabs for shop making
+# (causes strange behavior, use at your own risk)
+use-upper-slabs: false
+
+# Auto-Purge
+# Automatically purge empty shops that have been inactive for "purge-age" time
+# (no transactions, restocking, changing settings, etc...)
+# h = hours, d = days, w = weeks, m = months
+auto-purge: false
+purge-age: 1m
+
+# 3'RD PARTY PLUGIN SUPPORT PROPERTIES
+
+# Towny support: can toggle whether or not shops can only be made in towns
+only-allow-shops-in-towns: false
+
+# AESTHETIC PROPERTIES
+
+# Change the prefix that shows up in inventories and chat [PREMIUM ONLY]
+plugin-prefix: "&c&l[&5&luShops&c&l] &8&l"
+
+# Informs customer player of transaction
+inform-customer-of-transaction: true
+
+# Informs host player that a transaction look place in their shop
+inform-host-of-transaction: true
+
+# Informs customer that they do not have enough funds for a sale
+inform-customer-not-enough-funds: true
+
+# Informs customer that the shop does not have enough funds for a sale
+inform-customer-shop-out-of-funds: true
+
+# Informs customer that they do not have enough items for a sale
+inform-customer-not-enough-items: true
+
+# Informs customer that the shop does not have enough items for a sale
+inform-customer-shop-out-of-items: true
+
+# Informs customer that they do not have enough inventory space for a sale
+inform-customer-shop-out-of-space: true
+
+# Informs user that the shop is out of space
+inform-user-shop-out-of-space: true
+
+# Informs vendor of near empty shops on login
+inform-host-of-near-empty-shops: true
+# The maximum number of purchases - worth a shop must have left in stock to be considered near empty
+#   Example: with a value of 10 a cobblestone shop with
+#   64 quantity per sale would be considered near empty
+#   if the stock is less than or equal to 640
+near-empty-shop-threshold: 5
+
+# Informs vendor of empty shops on login
+inform-host-of-empty-shops: true
+
+# Toggle transaction logs
+transaction-logs: true
+
+# DEBUG MODE
+# 
+# When enabled, your server console will recieve many more messages, including:
+# Notifications for each ushop that is created during runtime
+# Notifications for each ushop that is deleted during runtime
+# Notifications for each ushop that is loaded from file on server start
+# Notifications for each ushop that is saved (on server stop OR after transaction / modification)
+# Notifications for each ushop that is purged (manually or automatically)
+# Notifications for each transaction done through a ushop
+# Notifications for each transaction command executed through a ushop
+# Notifications for each chunk loaded which contains a ushop
+# Notifications for each chunk unloaded which contains a ushop
+# Notifications for properly loading suggested prices
+debug: false

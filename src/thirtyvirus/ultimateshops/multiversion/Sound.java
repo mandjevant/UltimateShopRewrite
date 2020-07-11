@@ -228,7 +228,6 @@ public enum Sound
                 ++i;
                 continue;
             }
-            break;
         }
         throw new IllegalArgumentException("Found no valid sound name for " + this.name());
     }

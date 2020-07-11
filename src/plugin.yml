@@ -1,0 +1,81 @@
+main: thirtyvirus.ultimateshops.UltimateShops
+version: 2.0.6
+name: UltimateShops
+api-version: 1.13
+
+commands:
+  ushops:
+    description: Main command for Ultimate Shops. Use /ushops help for more info
+  ushops help:
+    description: Lists all commands and proper syntax for the plugin
+  ushops info:
+    description: Lists plugin information including the version, premium status, and the creator social links
+  ushops tutorial:
+    description: Brings up a tutorial book menu that teaches players how to use the plugin
+  ushops listRadius:
+    description: List the shops in a given radius
+  ushops myShops:
+    description: List all shops that the player owns
+  ushops save:
+    description: Save all shops to the shops.yml file or database
+  ushops reload:
+    description: Reload the config files and shops
+  ushops purge:
+    description: Remove shops in bulk given specific parameters
+  ushops removeDestroyShop:
+    description: Remove a shop given a specific coordinate
+  ushops shopCommandHelp:
+    description: List the chat placeholders used in shop buy and sell commands
+  ushops adminTutorial:
+    description: Brings up a tutorial book menu that teaches admins how to use the plugin
+  ushop:
+    description: Main command involving a specific UltimateShop.
+  ushop info:
+    description: Give a brief description of a particular shop
+  ushop create:
+    description: Create a ushop at the location the player is looking at
+  ushop modifyBuyPrice:
+    description: Manually change the buy price of a shop
+  ushop modifySellPrice:
+    description: Manually change the sell price of a shop
+  ushop modifyQuantity:
+    description: Manually change the quantity per sale of a shop
+  ushop modifyVendorNote:
+    description: Manually change the vendor note of a shop
+  ushop destroy:
+    description: Manually destroy a shop
+  ushop toggleAdmin:
+    description: Toggle the admin status of a shop
+  ushop setTag:
+    description: set the permissions tag attached to a shop
+  ushop getItem:
+    description: Give the player the item that the shop you are pointing to sells
+  ushop addBuyCommand:
+    description: Add buy command to a shop
+  ushop addSellCommand:
+    description: Add sell command to a shop
+  ushop removeBuyCommand:
+    description: Remove buy command from a shop
+  ushop removeSellCommand:
+    description: Remove sell command from a shop
+  ushop listBuyCommands:
+    description: List the buy commands of a shop
+  ushop listSellCommands:
+    description: List the sell commands of a shop
+  ushop clearBuyCommands:
+    description: Delete all buy commands from a shop
+  ushop clearSellCommands:
+    description: Delete all sell commands from a shop
+  ushop clearCommands:
+    description: Delete all buy and sell commands from a shop
+softdepend: [Multiverse-Core, ReWorld, PlotSquared, Clearlagg, Towny, AConomy]
+permissions:
+  ushops.user:
+    description: Allows player to use shops
+    default: true
+  ushops.make:
+    description: Allows players to make shops
+    default: true
+  ushops.admin:
+    description: Allows player to use the plugin's admin features
+    default: op

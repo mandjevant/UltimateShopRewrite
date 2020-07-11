@@ -1,0 +1,171 @@
+# UltimateShops for Craftbukkit / Spigot
+# Author: Brandon (ThirtyVirus) Calabrese
+#
+# YouTube:      https://youtube.com/channel/thirtyvirus
+# Twitter:      https://twitter.com/thirtyvirus
+# SpigotMC:     https://spigotmc.org/members/179587/
+# BUY PREMIUM:  https://spigotmc.org/resources/64925/
+
+# FILE: language.yml
+# This file controls all the messages that this plugin says in the chat. Server
+# owners can use the file to translate or otherwise modify the plugin
+# messages to better support their players.
+
+# Available message placeholders:
+#   <location>  |     The shop's location
+#   <item>      |     The ItemStack's name
+#   <amount>    |     The ItemStack's stack
+#   <host>      |     The shop's host player's name
+#   <customer>  |     The customer's name
+#   <money>     |     Money transferred during transaction
+#   <unitPrice> |     Money per unit (money / stack)
+#   <funds>     |     Player's money
+
+# Informs customer player of transaction
+customer-buy-message: Purchased <amount> * <item> at <host>'s shop! Cost = $<money>
+customer-sell-message: Sold <amount> * <item> at <host>'s shop! Profit = $<money>
+
+# Informs host player that a transaction look place in their shop
+host-buy-message: Player <customer> bought <amount> * <item> at your shop! Profit = $<money>
+host-sell-message: Player <customer> sold <amount> * <item> at your shop! Cost = $<money>
+
+# Informs customer that they do not have enough funds for a sale
+not-enough-funds-message: You do not have enough funds! Cost = $<money>. Funds = $<funds>
+
+# Informs customer that the shop does not have enough funds for a sale
+shop-out-of-funds-message: The shop owner, <host>, is out of funds!
+
+# Informs customer that they do not have enough items for a sale
+not-enough-items-message: You do not have enough of <item> for sale!
+
+# Informs customer that the shop does not have enough items for a sale
+shop-out-of-items-message: The shop is out of <item>. Inform <host>!
+
+# Inform player that a shop was just created
+shop-creation-message: Shop Created at <location>
+
+# Inform player that a shop was just broken
+shop-broken-message: Shop Destroyed at <location>
+
+# ----------------------------------------------------------------------------------------------------------
+# The below messages are responses to commands, and do not use placeholders.
+
+# Inform player of a command formatting error
+formatting-error-message: Formatting error, check your command!
+
+# Informs user that they do not have proper permissions
+not-enough-permissions-message: You do not have proper permissions!
+
+# Inform user that they do not have build permissions
+no-build-permissions-message: You cannot build in this area!
+
+# Inform user that they can only use an action in-game
+only-possible-in-game-message: You may only use that command in game, sorry.
+
+# Informs user that there is no shop selected
+shop-not-selected-message: No shop selected, point your cursor at a shop and type your command!
+
+# Inform user that the shop's buy price has been set (automatically followed by ": " and the new buy price)
+buyprice-set-message: Shop BuyPrice Set
+
+# Inform user that the shop's sell price has been set (automatically followed by ": " and the new sell price)
+sellprice-set-message: Shop SellPrice Set
+
+# Inform user that the shop's quantity per sale has been set (automatically followed by ": " and the new quantity)
+quantity-set-message: Shop Quantity Set
+
+# Inform user that the shop's vendor note has been set (automatically followed by ": " and the new vendor note)
+vendornote-set-message: Shop Vendor Note Set
+
+# Inform user that the shop's admin mode has been set (automatically followed by ": " and the new admin mode)
+adminmode-set-message: Shop admin mode
+
+# Inform user that the shop's tag has been set (automatically followed by ": " and the new tag)
+tag-set-message: Shop tag
+# Inform user that the shop's tag has been removed
+tag-removed-message: Shop tag removed
+
+# Inform user that a shop was purged (automatically followed by ": " and the shop's coordinate)
+shop-purged-message: Purged shop, located at
+
+# Inform user that the plugin has reloaded
+plugin-reloaded-message: Shops, display items, config, language settings, and suggested prices reloaded!
+
+# Inform user that a shop was created (automatically followed by ": " and the shop's coordinate)
+shop-created-message: Shop Created. Located at
+
+# Inform user that shops where saved
+shops-saved-message: Shops saved!
+
+# Inform user that shops were found (automatically followed by ": " and the number of found shops)
+shops-found-message: Shops Found
+
+# Inform user that they were given a shop's item
+shop-item-given-message: Given this shop's item!
+
+# Inform user that a shop does not exist at a location
+shop-not-at-location-message: There is no shop at that location!
+
+# Inform user that the selected block is not a slab
+block-not-a-slab-message: You are not pointing at a slab!
+
+# ----------------------------------------------------------------------------------------------------------
+# Shop buy / sell commands language options
+
+# Buy / sell commands text before listing buy or sell commands
+buycommands-message: Buy Commands
+sellcommands-message: Sell Commands
+
+# Inform user of changed buy / sell command (automatically followed by ": " and the command)
+add-buy-command-message: Added buy command
+add-sell-command-message: Added sell command
+remove-buy-command-message: Removed buy command
+remove-sell-command-message: Removed sell command
+
+# Index out of range error message for indexing buy commands (automatically followed by ": " and the index)
+index-out-of-range-buy-commands-message: Index out of range! No buy command at index
+
+# Index out of range error message for sell indexing commands (automatically followed by ": " and the index)
+index-out-of-range-sell-commands-message: Index out of range! No sell command at index
+
+# No buy commands error message
+no-buy-commands-message: There are no buy commands in this shop!
+
+# No sell commands error message
+no-sell-commands-message: There are no sell commands in this shop!
+
+# buy commands cleared message
+buy-commands-cleared-message: Buy Commands cleared!
+
+# sell commands cleared message
+sell-commands-cleared-message: Sell Commands cleared!
+
+# all commands cleared message
+all-commands-cleared-message: All Buy and Sell Commands cleared!
+
+# ----------------------------------------------------------------------------------------------------------
+# Misc. messages that do not have placeholder support
+
+# Warn player that plugin is the LITE version
+lite-version-warning: Maximum of 5 shops per player reached. Ask an administrator to install UltimateShops Premium!
+
+# Informs customer that they do not have enough inventory space for a sale
+customer-out-of-space-message: You do not have enough inventory space for sale!
+
+# Informs user that the shop is out of space
+shop-out-of-space-message: The shop is full!
+
+# Max shops per player reached message
+max-shops-reached-message: Maximum shops per player reached.
+
+# Inform player that shop is too full to break
+shop-too-full-to-break-message: Your shop is too full to break without lagging the server. Empty it out some more first!
+
+# Inform player that they own empty shops as a login reminder (automatically followed by ": " and a list of shops that are empty)
+empty-shops-message: The following shops are empty and need restocking
+
+# Inform player that they own near empty shops as a login reminder (automatically followed by ": " and a list of shops that are near empty)
+near-empty-shops-message: The following shops are near empty and need restocking
+
+# Inform player that they can only make shops in a town (requires Towny to be installed)
+towny-only-in-town-message: You can only make / use shops in a town!

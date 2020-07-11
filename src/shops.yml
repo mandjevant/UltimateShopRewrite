@@ -1,0 +1,12 @@
+# UltimateShops version 1.0
+# Author: Brandon (ThirtyVirus) Calabrese
+#
+# YouTube:      https://youtube.com/channel/thirtyvirus
+# Twitter:      https://twitter.com/thirtyvirus
+# SpigotMC:     https://spigotmc.org/members/179587/
+# BUY PREMIUM:  https://spigotmc.org/resources/64925/
+
+# FILE: shops.yml
+# This is where all player shops are stored. Do not change any values here while
+# the server is running, as the changes will likely be overwritten. Be careful when
+# changing anything here, as it may cause errors if done incorrectly.

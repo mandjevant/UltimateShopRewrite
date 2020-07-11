@@ -1028,10 +1028,10 @@ public enum XMaterial
         if (mat != null) {
             return mat;
         }
-        mat = Material.matchMaterial(this.m[item]);
-        if (mat != null) {
-            return mat;
-        }
+//        mat = Material.matchMaterial(this.m[item]);
+//        if (mat != null) {
+//            return mat;
+//        }
         for (final String s : this.m) {
             final Material material = Material.matchMaterial(s);
             if (material != null) {

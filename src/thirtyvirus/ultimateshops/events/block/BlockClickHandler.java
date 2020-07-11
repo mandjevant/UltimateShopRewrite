@@ -102,7 +102,7 @@ public class BlockClickHandler implements Listener
                 return;
             }
         }
-        else if (event.getPlayer().getInventory().getItemInHand().getType() != UltimateShops.toolItem) {
+        else if (event.getPlayer().getInventory().getItemInMainHand().getType() != UltimateShops.toolItem) {
             player.openInventory(MenuUtilities.vendorGUI(shop, player));
             event.setCancelled(true);
             return;
@@ -118,7 +118,7 @@ public class BlockClickHandler implements Listener
                 return;
             }
         }
-        else if (event.getPlayer().getInventory().getItemInHand().getType() != UltimateShops.toolItem) {
+        else if (event.getPlayer().getInventory().getItemInMainHand().getType() != UltimateShops.toolItem) {
             return;
         }
         if (!this.main.getPremium() && Utilities.countShopsOwned(this.main.getShops(), player) >= 5) {
@@ -168,7 +168,7 @@ public class BlockClickHandler implements Listener
                 return;
             }
         }
-        else if (event.getPlayer().getInventory().getItemInHand().getType() != UltimateShops.toolItem) {
+        else if (event.getPlayer().getInventory().getItemInMainHand().getType() != UltimateShops.toolItem) {
             return;
         }
         boolean isShopOwner = false;
@@ -192,7 +192,7 @@ public class BlockClickHandler implements Listener
             i1 = player.getInventory().getItemInMainHand().clone();
         }
         else {
-            i1 = player.getInventory().getItemInHand().clone();
+            i1 = player.getInventory().getItemInMainHand().clone();
         }
         i1.setAmount(1);
         final ItemStack i2 = shop.getItem().clone();
@@ -213,7 +213,7 @@ public class BlockClickHandler implements Listener
                 attemptedNum = player.getInventory().getItemInMainHand().getAmount();
             }
             else {
-                attemptedNum = player.getInventory().getItemInHand().getAmount();
+                attemptedNum = player.getInventory().getItemInMainHand().getAmount();
             }
             if (shopSpaceLeft >= attemptedNum) {
                 shop.setAmount(shop.getAmount() + attemptedNum);
@@ -221,7 +221,7 @@ public class BlockClickHandler implements Listener
                     player.getInventory().setItemInMainHand((ItemStack)null);
                 }
                 else {
-                    player.getInventory().setItemInHand((ItemStack)null);
+                    player.getInventory().setItemInMainHand((ItemStack)null);
                 }
             }
             else {
@@ -230,7 +230,7 @@ public class BlockClickHandler implements Listener
                     player.getInventory().getItemInMainHand().setAmount(player.getInventory().getItemInMainHand().getAmount() - shopSpaceLeft);
                 }
                 else {
-                    player.getInventory().getItemInHand().setAmount(player.getInventory().getItemInMainHand().getAmount() - shopSpaceLeft);
+                    player.getInventory().getItemInMainHand().setAmount(player.getInventory().getItemInMainHand().getAmount() - shopSpaceLeft);
                 }
             }
         }

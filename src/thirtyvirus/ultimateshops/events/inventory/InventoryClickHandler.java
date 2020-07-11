@@ -4,6 +4,7 @@
 
 package thirtyvirus.ultimateshops.events.inventory;
 
+import org.apache.commons.lang.WordUtils;
 import org.bukkit.event.inventory.ClickType;
 import java.util.Iterator;
 import org.bukkit.plugin.Plugin;
@@ -524,44 +525,49 @@ public class InventoryClickHandler implements Listener
         event.setCancelled(true);
         player.updateInventory();
         final UShop shop = UShop.fromItem(this.main, inventory.getItem(6));
+        final String[] stringSplit = inventory.getItem(3).getItemMeta().getLore().get(0).split(": ");
+        int rateChange = Integer.parseInt(stringSplit[1]);
         if (event.getRawSlot() == 0) {
             if (shop.getBuyPrice() == 0 || !UltimateShops.buyItems) {
                 return;
             }
-            if (shop.getAmount() < shop.getStack()) {
+            if (shop.getAmount() < shop.getStack() * rateChange) {
                 if (this.main.informCustomerShopOutOfItems) {
-                    Utilities.warnPlayer((CommandSender)player, Arrays.asList(Utilities.toFormattedString(this.main.phrases.get("shop-out-of-items-message"), shop, player, shop.getBuyPrice(), this.main.getEcon(), ChatColor.RED)));
+                    Utilities.warnPlayer((CommandSender)player, Arrays.asList(Utilities.toFormattedStringWAmount(this.main.phrases.get("shop-out-of-items-message"), shop, player, shop.getBuyPrice(), this.main.getEcon(), ChatColor.RED, rateChange)));
                 }
                 return;
             }
-            if (this.main.getEcon().getBalance((OfflinePlayer)player) < shop.getBuyPrice()) {
+            if (this.main.getEcon().getBalance((OfflinePlayer)player) < shop.getBuyPrice() * rateChange) {
                 if (this.main.informCustomerNotEnoughFunds) {
-                    Utilities.warnPlayer((CommandSender)player, Arrays.asList(Utilities.toFormattedString(this.main.phrases.get("not-enough-funds-message"), shop, player, shop.getBuyPrice(), this.main.getEcon(), ChatColor.RED)));
+                    Utilities.warnPlayer((CommandSender)player, Arrays.asList(Utilities.toFormattedStringWAmount(this.main.phrases.get("not-enough-funds-message"), shop, player, shop.getBuyPrice(), this.main.getEcon(), ChatColor.RED, rateChange)));
                 }
                 return;
             }
+//          // Not sure if this is done well
             if (Utilities.getAvailableItemSlots((Inventory)player.getInventory(), shop.getItem()) < shop.getStack()) {
                 if (this.main.informCustomerShopOutOfSpace) {
                     Utilities.warnPlayer((CommandSender)player, Arrays.asList(Utilities.toFormattedString(this.main.phrases.get("customer-out-of-space-message"), shop, player, shop.getBuyPrice(), this.main.getEcon(), ChatColor.RED)));
                 }
                 return;
             }
-            this.main.getEcon().withdrawPlayer((OfflinePlayer)player, (double)shop.getBuyPrice());
+            this.main.getEcon().withdrawPlayer((OfflinePlayer)player, (double)shop.getBuyPrice()*rateChange);
             if (!shop.getAdmin()) {
-                this.main.getEcon().depositPlayer(shop.getVendor(), (double)shop.getBuyPrice());
+                this.main.getEcon().depositPlayer(shop.getVendor(), (double)shop.getBuyPrice()*rateChange);
             }
-            Utilities.withdraw(shop, player, shop.getStack());
+            Utilities.withdraw(shop, player, shop.getStack()*rateChange);
             final boolean players_same = player.getUniqueId().equals(shop.getVendor().getUniqueId());
+//          Since amount money and amount bought is different. Use new utilities formatted.
             if (this.main.informCustomerOfTransaction && !players_same) {
-                Utilities.informPlayer((CommandSender)player, Arrays.asList(Utilities.toFormattedString(this.main.phrases.get("customer-buy-message"), shop, player, shop.getBuyPrice(), this.main.getEcon(), ChatColor.GRAY)));
+                Utilities.informPlayer((CommandSender)player, Arrays.asList(Utilities.toFormattedStringWAmount(this.main.phrases.get("customer-buy-message"), shop, player, shop.getBuyPrice(), this.main.getEcon(), ChatColor.GRAY, rateChange)));
             }
             if (this.main.informHostOfTransaction && shop.getVendor().isOnline() && !shop.getAdmin() && !players_same) {
                 final Player vendor = Bukkit.getPlayer(shop.getVendor().getUniqueId());
-                Utilities.informPlayer((CommandSender)vendor, Arrays.asList(Utilities.toFormattedString(this.main.phrases.get("host-buy-message"), shop, player, shop.getBuyPrice(), this.main.getEcon(), ChatColor.GRAY)));
+                Utilities.informPlayer((CommandSender)vendor, Arrays.asList(Utilities.toFormattedStringWAmount(this.main.phrases.get("host-buy-message"), shop, player, shop.getBuyPrice(), this.main.getEcon(), ChatColor.GRAY, rateChange)));
                 Utilities.playSound(ActionSound.POP, player);
             }
+//            Fixed
             if (this.main.getTransactionLogs() && !players_same) {
-                Utilities.writeLog((Plugin)this.main, player.getName() + " bought " + shop.getStack() + " of " + shop.getItem().getType().toString() + " from " + shop.getVendor().getName() + " for $" + shop.getBuyPrice() + " at shop located at: " + Utilities.toLocString(shop.getLocation()));
+                Utilities.writeLog((Plugin)this.main, player.getName() + " bought " + shop.getStack()*rateChange + " of " + shop.getItem().getType().toString() + " from " + shop.getVendor().getName() + " for $" + shop.getBuyPrice()*rateChange + " at shop located at: " + Utilities.toLocString(shop.getLocation()));
             }
             if (this.main.getPremium()) {
                 for (final String command : shop.getBuyCommands()) {
@@ -581,40 +587,43 @@ public class InventoryClickHandler implements Listener
             if (shop.getSellPrice() == 0 || !UltimateShops.sellItems) {
                 return;
             }
-            if (Utilities.countItemsInInventory((Inventory)player.getInventory(), shop.getItem()) < shop.getStack()) {
+            if (Utilities.countItemsInInventory((Inventory)player.getInventory(), shop.getItem()) < shop.getStack()*rateChange) {
                 if (this.main.informCustomerNotEnoughItems) {
                     Utilities.warnPlayer((CommandSender)player, Arrays.asList(Utilities.toFormattedString(this.main.phrases.get("not-enough-items-message"), shop, player, shop.getSellPrice(), this.main.getEcon(), ChatColor.RED)));
                 }
                 return;
             }
-            if (this.main.getEcon().getBalance(shop.getVendor()) < shop.getSellPrice() && !shop.getAdmin()) {
+            if (this.main.getEcon().getBalance(shop.getVendor()) < shop.getSellPrice()*rateChange && !shop.getAdmin()) {
                 if (this.main.informCustomerShopOutOfFunds) {
                     Utilities.warnPlayer((CommandSender)player, Arrays.asList(Utilities.toFormattedString(this.main.phrases.get("shop-out-of-funds-message"), shop, player, shop.getSellPrice(), this.main.getEcon(), ChatColor.RED)));
                 }
                 return;
             }
-            if (shop.getAmount() + shop.getStack() > this.main.getMaxShopStacks() * 64 && shop.getStack() != 0) {
+            if (shop.getAmount() + shop.getStack() * rateChange > this.main.getMaxShopStacks() * 64 && shop.getStack() != 0) {
                 if (this.main.informUserShopOutOfSpace) {
                     Utilities.warnPlayer((CommandSender)player, Arrays.asList(Utilities.toFormattedString(this.main.phrases.get("shop-out-of-space-message"), shop, player, shop.getSellPrice(), this.main.getEcon(), ChatColor.RED)));
                 }
                 return;
             }
+//            Done
             if (!shop.getAdmin()) {
-                this.main.getEcon().withdrawPlayer(shop.getVendor(), (double)shop.getSellPrice());
+                this.main.getEcon().withdrawPlayer(shop.getVendor(), (double)shop.getSellPrice()*rateChange);
             }
-            this.main.getEcon().depositPlayer((OfflinePlayer)player, (double)shop.getSellPrice());
+            this.main.getEcon().depositPlayer((OfflinePlayer)player, (double)shop.getSellPrice()*rateChange);
             Utilities.deposit(shop, player, shop.getStack());
             final boolean players_same = player.getUniqueId().equals(shop.getVendor().getUniqueId());
+//            Again the messaging
             if (this.main.informCustomerOfTransaction && !players_same) {
-                Utilities.informPlayer((CommandSender)player, Arrays.asList(Utilities.toFormattedString(this.main.phrases.get("customer-sell-message"), shop, player, shop.getSellPrice(), this.main.getEcon(), ChatColor.GRAY)));
+                Utilities.informPlayer((CommandSender)player, Arrays.asList(Utilities.toFormattedStringWAmount(this.main.phrases.get("customer-sell-message"), shop, player, shop.getSellPrice(), this.main.getEcon(), ChatColor.GRAY, rateChange)));
             }
             if (this.main.informHostOfTransaction && shop.getVendor().isOnline() && !shop.getAdmin() && !players_same) {
                 final Player vendor = Bukkit.getPlayer(shop.getVendor().getUniqueId());
-                Utilities.informPlayer((CommandSender)vendor, Arrays.asList(Utilities.toFormattedString(this.main.phrases.get("host-sell-message"), shop, player, shop.getSellPrice(), this.main.getEcon(), ChatColor.GRAY)));
+                Utilities.informPlayer((CommandSender)vendor, Arrays.asList(Utilities.toFormattedStringWAmount(this.main.phrases.get("host-sell-message"), shop, player, shop.getSellPrice(), this.main.getEcon(), ChatColor.GRAY, rateChange)));
                 Utilities.playSound(ActionSound.POP, player);
             }
+//            Messaging done, now logs again
             if (this.main.getTransactionLogs() && !players_same) {
-                Utilities.writeLog((Plugin)this.main, player.getName() + " sold " + shop.getStack() + " of " + shop.getItem().getType().toString() + " to " + shop.getVendor().getName() + " for $" + shop.getSellPrice() + " at shop located at: " + Utilities.toLocString(shop.getLocation()));
+                Utilities.writeLog((Plugin)this.main, player.getName() + " sold " + shop.getStack()*rateChange + " of " + shop.getItem().getType().toString() + " to " + shop.getVendor().getName() + " for $" + shop.getSellPrice()*rateChange + " at shop located at: " + Utilities.toLocString(shop.getLocation()));
             }
             if (this.main.getPremium()) {
                 for (final String command : shop.getSellCommands()) {
@@ -630,7 +639,42 @@ public class InventoryClickHandler implements Listener
             shop.setLastActive(System.currentTimeMillis());
             this.main.saveShops(this.main.getShops());
         }
-        MenuUtilities.updateCustomerGUI(shop, inventory, player, this.main.getEcon());
+        else if (event.getRawSlot() == 3) {
+            String name = WordUtils.capitalizeFully(shop.getItem().getType().name().replace('_', ' ').toLowerCase());
+            final double stacks = shop.getAmount() / (double)shop.getItem().getMaxStackSize();
+            if (shop.getItem().getItemMeta().getDisplayName() != null && shop.getItem().getItemMeta().getDisplayName() != "") {
+                name = shop.getItem().getItemMeta().getDisplayName();
+            }
+            if (event.isLeftClick()) {
+                if (rateChange == 2048) {
+                    return;
+                }
+                Utilities.playSound(ActionSound.CLICK, player);
+                Utilities.loreItem(inventory.getItem(3), Arrays.asList(ChatColor.GRAY + "Amount Per Click: " + Integer.toString(rateChange * 2), "Change the rate you", "would like to buy/sell"));
+                if (shop.getBuyPrice() != 0 && UltimateShops.buyItems) {
+                    inventory.setItem(0, Utilities.loreItem(Utilities.nameItem(XMaterial.GOLD_INGOT.parseMaterial(), ChatColor.GOLD + "Buy '" + name + "' * " + shop.getStack()*(rateChange*2)), Arrays.asList(ChatColor.GRAY + "Buy for: $" + shop.getBuyPrice()*(rateChange*2), "In Stock: " + shop.getAmount(), "or " + String.format("%.2f", stacks) + " stacks")));
+                }
+                if (shop.getSellPrice() != 0 && UltimateShops.sellItems) {
+                    inventory.setItem(1, Utilities.loreItem(Utilities.nameItem(XMaterial.IRON_INGOT.parseMaterial(), ChatColor.GOLD + "Sell '" + name + "' * " + shop.getStack()*(rateChange*2)), Arrays.asList(ChatColor.GRAY + "Sell for: $" + shop.getSellPrice()*(rateChange*2), "In Stock: " + shop.getAmount(), "or " + String.format("%.2f", stacks) + " stacks")));
+                }
+            }
+            if (event.isRightClick()) {
+                if (rateChange == 1) {
+                    return;
+                }
+                Utilities.playSound(ActionSound.CLICK, player);
+                Utilities.loreItem(inventory.getItem(3), Arrays.asList(ChatColor.GRAY + "Amount Per Click: " + Integer.toString(rateChange / 2), "Change the rate you", "would like to buy/sell"));
+                if (shop.getBuyPrice() != 0 && UltimateShops.buyItems) {
+                    inventory.setItem(0, Utilities.loreItem(Utilities.nameItem(XMaterial.GOLD_INGOT.parseMaterial(), ChatColor.GOLD + "Buy '" + name + "' * " + shop.getStack()*(rateChange/2)), Arrays.asList(ChatColor.GRAY + "Buy for: $" + shop.getBuyPrice()*(rateChange/2), "In Stock: " + shop.getAmount(), "or " + String.format("%.2f", stacks) + " stacks")));
+                }
+                if (shop.getSellPrice() != 0 && UltimateShops.sellItems) {
+                    inventory.setItem(1, Utilities.loreItem(Utilities.nameItem(XMaterial.IRON_INGOT.parseMaterial(), ChatColor.GOLD + "Sell '" + name + "' * " + shop.getStack()*(rateChange/2)), Arrays.asList(ChatColor.GRAY + "Sell for: $" + shop.getSellPrice()*(rateChange/2), "In Stock: " + shop.getAmount(), "or " + String.format("%.2f", stacks) + " stacks")));
+                }
+            }
+        }
+        if (event.getRawSlot() != 3) {
+            MenuUtilities.updateCustomerGUI(shop, inventory, player, this.main.getEcon());
+        }
     }
     
     private void chestInputGUI(final InventoryClickEvent event, final Inventory inventory, final ItemStack item, final Player player) {

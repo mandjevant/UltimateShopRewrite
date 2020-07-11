@@ -120,6 +120,38 @@ public final class Utilities
             player.sendMessage(UltimateShops.prefix + ChatColor.RESET + ChatColor.GRAY + message);
         }
     }
+
+    public static String toFormattedStringWAmount(final String msg, final UShop shop, final Player player, final int moneyAmount, final Economy econ, final ChatColor defaultColor, final int rateChange) {
+        if (msg == null) {
+            return msg;
+        }
+        String modified = msg + defaultColor;
+        modified = modified.replaceAll(" ", " " + defaultColor);
+        modified = modified.replaceAll("<location>", ChatColor.YELLOW + toLocString(shop.getLocation())) + defaultColor;
+        if (shop.getItem().getItemMeta().getDisplayName() != null && shop.getItem().getItemMeta().getDisplayName() != "") {
+            modified = modified.replaceAll("<item>", ChatColor.AQUA + shop.getItem().getItemMeta().getDisplayName()) + defaultColor;
+        }
+        else {
+            modified = modified.replaceAll("<item>", ChatColor.AQUA + shop.getItem().getType().name()) + defaultColor;
+        }
+        modified = modified.replaceAll("<amount>", "" + ChatColor.LIGHT_PURPLE + shop.getStack()*rateChange) + defaultColor;
+        if (!shop.getAdmin()) {
+            modified = modified.replaceAll("<host>", ChatColor.GOLD + shop.getVendor().getName()) + defaultColor;
+        }
+        else {
+            modified = modified.replaceAll("<host>", ChatColor.RED + "ADMIN") + defaultColor;
+        }
+        modified = modified.replaceAll("<customer>", ChatColor.GOLD + player.getName()) + defaultColor;
+        modified = modified.replaceAll("<money>", "" + ChatColor.GREEN + moneyAmount*rateChange) + defaultColor;
+        if (shop.getStack() != 0) {
+            modified = modified.replaceAll("<unitPrice>", "" + ChatColor.GREEN + moneyAmount / shop.getStack()) + defaultColor;
+        }
+        else {
+            modified = modified.replaceAll("<unitPrice>", "" + ChatColor.GREEN + 0) + defaultColor;
+        }
+        modified = modified.replaceAll("<funds>", "" + ChatColor.GREEN + econ.getBalance((OfflinePlayer)player)) + defaultColor;
+        return modified;
+    }
     
     public static String toFormattedString(final String msg, final UShop shop, final Player player, final int moneyAmount, final Economy econ, final ChatColor defaultColor) {
         if (msg == null) {
@@ -134,7 +166,6 @@ public final class Utilities
         else {
             modified = modified.replaceAll("<item>", ChatColor.AQUA + shop.getItem().getType().name()) + defaultColor;
         }
-        modified = modified.replaceAll("<amount>", "" + ChatColor.LIGHT_PURPLE + shop.getStack()) + defaultColor;
         if (!shop.getAdmin()) {
             modified = modified.replaceAll("<host>", ChatColor.GOLD + shop.getVendor().getName()) + defaultColor;
         }
