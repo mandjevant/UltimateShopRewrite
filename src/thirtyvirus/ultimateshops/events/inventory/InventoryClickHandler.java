@@ -609,7 +609,7 @@ public class InventoryClickHandler implements Listener
                 this.main.getEcon().withdrawPlayer(shop.getVendor(), (double)shop.getSellPrice()*rateChange);
             }
             this.main.getEcon().depositPlayer((OfflinePlayer)player, (double)shop.getSellPrice()*rateChange);
-            Utilities.deposit(shop, player, shop.getStack());
+            Utilities.deposit(shop, player, shop.getStack()*rateChange);
             final boolean players_same = player.getUniqueId().equals(shop.getVendor().getUniqueId());
 //            Again the messaging
             if (this.main.informCustomerOfTransaction && !players_same) {
