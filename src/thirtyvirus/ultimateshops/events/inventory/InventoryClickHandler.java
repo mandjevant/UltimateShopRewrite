@@ -543,8 +543,7 @@ public class InventoryClickHandler implements Listener
                 }
                 return;
             }
-//          // Not sure if this is done well
-            if (Utilities.getAvailableItemSlots((Inventory)player.getInventory(), shop.getItem()) < shop.getStack()) {
+            if (Utilities.getAvailableItemSlots((Inventory)player.getInventory(), shop.getItem()) < shop.getStack()*rateChange) {
                 if (this.main.informCustomerShopOutOfSpace) {
                     Utilities.warnPlayer((CommandSender)player, Arrays.asList(Utilities.toFormattedString(this.main.phrases.get("customer-out-of-space-message"), shop, player, shop.getBuyPrice(), this.main.getEcon(), ChatColor.RED)));
                 }
